@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 5.0.1 (Python 3.9.13 on darwin)" generated="20220908 20:51:50.748" rpa="true" schemaversion="3">
+<suite id="s1" name="Tasks" source="/Users/aneilyounis/Desktop/rpa-cert-2/tasks.robot">
+<kw name="Open RPA Website" library="keywords" type="SETUP">
+<kw name="Get Secret" library="RPA.Robocorp.Vault">
+<var>${secret}</var>
+<arg>secrets</arg>
+<doc>Read a secret from the configured source, e.g. Robocorp Vault,
+and return it as a ``Secret`` object.</doc>
+<msg timestamp="20220908 20:51:51.732" level="INFO">Protecting keyword: RPA.Robocorp.Vault.Get Secret</msg>
+<msg timestamp="20220908 20:51:51.733" level="INFO">Log level changed from NONE to INFO.</msg>
+<status status="PASS" starttime="20220908 20:51:51.732" endtime="20220908 20:51:51.733"/>
+</kw>
+<kw name="Open Available Browser" library="RPA.Browser.Selenium">
+<arg>${secret}[site-url]</arg>
+<doc>Attempts to open a browser on the user's device from a set of
+supported browsers. Automatically downloads a corresponding webdriver
+if none is already installed.</doc>
+<msg timestamp="20220908 20:51:51.733" level="INFO">Creating an instance of the Chrome WebDriver.</msg>
+<msg timestamp="20220908 20:51:51.758" level="INFO">Created download root directory: /Users/aneilyounis/.robocorp/webdrivers</msg>
+<msg timestamp="20220908 20:51:51.759" level="INFO">Created symlink directory: /Users/aneilyounis/.robocorp/webdrivers</msg>
+<msg timestamp="20220908 20:51:51.759" level="INFO">Creating an instance of the Chrome WebDriver.</msg>
+<msg timestamp="20220908 20:51:54.055" level="INFO">Created Chrome browser with arguments: --disable-dev-shm-usage --disable-web-security --allow-running-insecure-content --no-sandbox</msg>
+<msg timestamp="20220908 20:51:54.056" level="INFO" html="true">&lt;p&gt;Attempted combinations:&lt;/p&gt;&lt;div class="doc"&gt;&lt;table&gt;&lt;tr&gt;&lt;th&gt;Browser&lt;/th&gt;&lt;th&gt;Download&lt;/th&gt;&lt;th&gt;Error&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Chrome&lt;/td&gt;&lt;td&gt;False&lt;/td&gt;&lt;td&gt;Message: 'chromedriver' executable needs to be in PATH. Please see https://sites.google.com/a/chromium.org/chromedriver/home
+&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Chrome&lt;/td&gt;&lt;td&gt;True&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</msg>
+<msg timestamp="20220908 20:51:54.056" level="INFO">Opening url 'https://robotsparebinindustries.com/#/robot-order'</msg>
+<status status="PASS" starttime="20220908 20:51:51.733" endtime="20220908 20:52:05.010"/>
+</kw>
+<status status="PASS" starttime="20220908 20:51:51.731" endtime="20220908 20:52:05.011"/>
+</kw>
+<test id="s1-t1" name="Temp Task" line="15">
+<kw name="Archive All Receipts" library="keywords">
+<kw name="Set Variable" library="BuiltIn">
+<var>${archive_name}</var>
+<arg>receipts.zip</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20220908 20:52:05.013" level="INFO">${archive_name} = receipts.zip</msg>
+<status status="PASS" starttime="20220908 20:52:05.013" endtime="20220908 20:52:05.013"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${OUTPUT_DIR}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220908 20:52:05.013" level="INFO">/Users/aneilyounis/Desktop/rpa-cert-2</msg>
+<status status="PASS" starttime="20220908 20:52:05.013" endtime="20220908 20:52:05.013"/>
+</kw>
+<kw name="Archive Folder With Zip" library="RPA.Archive">
+<arg>output</arg>
+<arg>receipts.zip</arg>
+<arg>False</arg>
+<arg>*.pdf</arg>
+<doc>Create a zip archive of a folder</doc>
+<status status="PASS" starttime="20220908 20:52:05.013" endtime="20220908 20:52:05.149"/>
+</kw>
+<kw name="Move File" library="RPA.FileSystem">
+<arg>${archive_name}</arg>
+<arg>${OUTPUT_DIR}${/}${archive_name}</arg>
+<doc>Move a file from source path to destination path,
+optionally overwriting the destination.</doc>
+<msg timestamp="20220908 20:52:05.151" level="FAIL">FileExistsError: Destination /Users/aneilyounis/Desktop/rpa-cert-2/receipts.zip already exists</msg>
+<status status="FAIL" starttime="20220908 20:52:05.149" endtime="20220908 20:52:05.152"/>
+</kw>
+<status status="FAIL" starttime="20220908 20:52:05.012" endtime="20220908 20:52:05.152"/>
+</kw>
+<status status="FAIL" starttime="20220908 20:52:05.011" endtime="20220908 20:52:05.153">FileExistsError: Destination /Users/aneilyounis/Desktop/rpa-cert-2/receipts.zip already exists</status>
+</test>
+<kw name="Close RPA Site" library="keywords" type="TEARDOWN">
+<kw name="Close All Browsers" library="RPA.Browser.Selenium">
+<doc>Closes all open browsers and resets the browser cache.</doc>
+<status status="PASS" starttime="20220908 20:52:05.154" endtime="20220908 20:52:05.247"/>
+</kw>
+<status status="PASS" starttime="20220908 20:52:05.154" endtime="20220908 20:52:05.247"/>
+</kw>
+<doc>Orders robots from RobotSpareBin Industries Inc.
+Saves the order HTML receipt as a PDF file.
+Saves the screenshot of the ordered robot.
+Embeds the screenshot of the robot to the PDF receipt.
+Creates ZIP archive of the receipts and the images.</doc>
+<status status="FAIL" starttime="20220908 20:51:50.752" endtime="20220908 20:52:05.248"/>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="1" skip="0">All Tasks</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="0" fail="1" skip="0" id="s1" name="Tasks">Tasks</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
