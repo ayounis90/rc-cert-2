@@ -12,7 +12,7 @@ Suite Teardown      Close RPA Site
 
 
 *** Tasks ***
-Minimal task
+Order robots from RobotSpareBin Industries Inc
     Agree to Modal Message
     ${orders}    Get Orders
     FOR    ${order}    IN    @{orders}
